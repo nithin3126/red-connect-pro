@@ -82,7 +82,7 @@ export async function speakEmergencyAlert(text: string): Promise<Uint8Array | nu
       model: "gemini-2.5-flash-preview-tts",
       contents: [{ parts: [{ text }] }],
       config: {
-        responseModalalities: [Modality.AUDIO],
+        responseModalities: [Modality.AUDIO],
         speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Kore' } } },
       },
     });

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { 
   Droplet, LayoutDashboard, Bell, LogOut, PlusSquare, Database, Users, 
@@ -144,7 +145,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     getCurrentPosition()
-      .then((coords) => {
+      .then((coords: GeoCoords) => {
         setUserLocation(coords);
         setSystemStatus(prev => ({ ...prev, gps: 'active' }));
       })
@@ -155,7 +156,7 @@ const App: React.FC = () => {
       });
 
     const watchId = startLocationWatch(
-      (coords) => setUserLocation(coords), 
+      (coords: GeoCoords) => setUserLocation(coords), 
       (err) => {}
     );
 
@@ -269,7 +270,7 @@ const App: React.FC = () => {
       </header>
 
       {isOffline && (
-        <div className="bg-amber-500 text-white text-[10px] font-black uppercase tracking-[0.2em] py-2 text-center flex items-center justify-center gap-2">
+        <div className="bg-amber-50 text-white text-[10px] font-black uppercase tracking-[0.2em] py-2 text-center flex items-center justify-center gap-2">
           <CloudOff className="w-4 h-4" /> 
           Critical Connectivity Lost • Running on Local Medical Registry Cache
         </div>
@@ -336,7 +337,7 @@ const App: React.FC = () => {
         <section className="md:col-span-9">
           {activeTab === 'feed' && <EmergencyFeed requests={allRequests} onMatch={setSelectedRequest} dengueMode={false} userLocation={userLocation} user={user} />}
           {activeTab === 'scanner' && <NearbyScanner initialLocation={userLocation} />}
-          {activeTab === 'drives' && <BloodDriveList onNotify={addNotification} user={user} initialLocation={userLocation} />}
+          {activeTab === 'drives' && <BloodDriveList user={user} initialLocation={userLocation} />}
           {activeTab === 'new-request' && <HospitalRequestForm hospitalName={user.name} onSubmit={handleCreateRequest} isOffline={isOffline} addNotification={addNotification} />}
           {activeTab === 'hospital-status' && <HospitalStatusDashboard hospitalName={user.name} requests={allRequests} isOffline={isOffline} addNotification={addNotification} />}
           {activeTab === 'my-stock' && <StockManagement bankId={user.id} bankName={user.name} isOffline={isOffline} addNotification={addNotification} />}
@@ -344,11 +345,11 @@ const App: React.FC = () => {
           {activeTab === 'allocation' && <BloodAllocation bankId={user.id} bankName={user.name} isOffline={isOffline} addNotification={addNotification} />}
           {activeTab === 'collection' && <BloodCollection bankId={user.id} bankName={user.name} userLocation={userLocation} isOffline={isOffline} addNotification={addNotification} />}
           {activeTab === 'schedule' && <DonationSchedule lastDonationDate="2025-12-12" bloodType="O+" onNavigateToDrives={() => setActiveTab('drives')} />}
-          {activeTab === 'eligibility' && <EligibilityChecker onVerified={(advice) => addNotification(`Health Assessment: ${advice}`, 'info')} />}
+          {activeTab === 'eligibility' && <EligibilityChecker onVerified={(advice: string) => addNotification(`Health Assessment: ${advice}`, 'info')} />}
           {activeTab === 'leaderboard' && <Leaderboard userLocation={userLocation} />}
           {activeTab === 'register-donor' && (
             <DonorRegistrationForm 
-              onRegister={(d) => {
+              onRegister={(d: any) => {
                 backendService.saveDonor(d);
                 addNotification("New donor registered successfully.", "success");
                 setActiveTab(user.role === 'BloodBank' ? 'donor-db' : 'feed');
