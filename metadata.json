@@ -1,0 +1,8 @@
+{
+  "name": "Red Command Elite",
+  "description": "Enterprise-grade medical logistics and blood coordination platform. Unified state-wide relay with e-RaktKosh integration and Gemini 3 Pro intelligence.",
+  "requestFramePermissions": [
+    "geolocation",
+    "camera"
+  ]
+}
